@@ -1,0 +1,10 @@
+{
+   "targets": [
+      {
+         "name": "appointly",
+         "type": "github",
+         "repo": "gpereira305/appointlyapp",
+         "branch": "master"
+      }
+   ]
+}
