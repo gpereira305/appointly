@@ -1,28 +1,14 @@
-"use client";
-
 import React from "react";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 
 export default function AuthenticationPage() {
@@ -40,32 +26,23 @@ export default function AuthenticationPage() {
         <TabsContent value="login">
           <Card>
             <CardHeader>
-              <CardTitle>Login</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl">Já possui uma conta?</CardTitle>
+              <CardDescription className="text-base">
                 Faça login na sua conta para continuar.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" defaultValue="Pedro Duarte" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" defaultValue="@peduarte" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save changes</Button>
-            </CardFooter>
+
+            <LoginForm />
           </Card>
         </TabsContent>
         <TabsContent value="register">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">Cadastre-se</CardTitle>
+              <CardTitle className="text-2xl">
+                Cadastre-se agora mesmo!
+              </CardTitle>
               <CardDescription className="text-base">
-                Crie sua conta!
+                Crie sua conta para acessar a plataforma.
               </CardDescription>
             </CardHeader>
 

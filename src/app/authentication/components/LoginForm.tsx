@@ -16,35 +16,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userRegisterSchema } from "@/utils/authSchemas";
+import { userLoginSchema } from "@/utils/authSchemas";
 
-type UserRegisterSchemaType = z.infer<typeof userRegisterSchema>;
-export default function SignupForm() {
-  const form = useForm<UserRegisterSchemaType>({
-    resolver: zodResolver(userRegisterSchema),
+type userLoginSchemaType = z.infer<typeof userLoginSchema>;
+export default function LoginForm() {
+  const form = useForm<userLoginSchemaType>({
+    resolver: zodResolver(userLoginSchema),
     defaultValues: {
       email: "",
-      name: "",
       password: "",
     },
   });
 
-  const onSubmit: SubmitHandler<UserRegisterSchemaType> = (values) => {
+  const onSubmit: SubmitHandler<userLoginSchemaType> = (values) => {
     console.log(values);
   };
 
   const formData: Array<{
-    name: keyof UserRegisterSchemaType;
+    name: keyof userLoginSchemaType;
     label: string;
     type: string;
     placeholder: string;
   }> = [
-    {
-      name: "name",
-      label: "Seu nome:",
-      type: "text",
-      placeholder: "Digite seu nome",
-    },
     {
       name: "email",
       label: "Seu email:",
