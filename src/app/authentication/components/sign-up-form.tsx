@@ -1,8 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -16,10 +19,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { userRegisterSchema } from "@/utils/authSchemas";
 
 type UserRegisterSchemaType = z.infer<typeof userRegisterSchema>;
 export default function SignupForm() {
+  const router = useRouter();
+
   const form = useForm<UserRegisterSchemaType>({
     resolver: zodResolver(userRegisterSchema),
     defaultValues: {
@@ -29,8 +35,24 @@ export default function SignupForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<UserRegisterSchemaType> = (values) => {
-    console.log(values);
+  const onSubmit: SubmitHandler<UserRegisterSchemaType> = async (values) => {
+    await authClient.signUp.email(
+      {
+        email: values.email,
+        password: values.password,
+        name: values.name,
+      },
+      {
+        onSuccess: () => {
+          router.push("/dashboard");
+          toast.success("Usuário cadastrado com sucesso!");
+        },
+        onError: (error) => {
+          toast.error("Email ou senha inválidos!");
+          console.error("Erro ao cadastrar usuário!", error);
+        },
+      },
+    );
   };
 
   const formData: Array<{
@@ -85,8 +107,20 @@ export default function SignupForm() {
           ))}
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full cursor-pointer">
-            Cadastrar
+          <Button
+            type="submit"
+            className={`w-full ${
+              form.formState.isSubmitting
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
+            }`}
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Cadastrar"
+            )}
           </Button>
         </CardFooter>
       </form>
