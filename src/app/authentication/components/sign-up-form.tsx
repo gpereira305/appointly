@@ -47,9 +47,11 @@ export default function SignupForm() {
           router.push("/dashboard");
           toast.success("Usuário cadastrado com sucesso!");
         },
-        onError: (error) => {
-          toast.error("Email ou senha inválidos!");
-          console.error("Erro ao cadastrar usuário!", error);
+        onError: (ctx) => {
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
+            toast.error("Usuário já cadastrado!");
+            return;
+          }
         },
       },
     );
