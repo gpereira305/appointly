@@ -12,3 +12,7 @@ export const userLoginSchema = z.object({
   email: z.string().trim().email({ message: isInvalid }),
   password: z.string().trim().min(8, { message: errorMessage }),
 });
+
+export const userClinicFormSchema = z.object({
+  name: z.string().trim().min(1, { message: errorMessage }),
+});

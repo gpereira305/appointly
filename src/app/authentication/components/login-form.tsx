@@ -43,7 +43,7 @@ export default function LoginForm() {
       {
         onSuccess: () => {
           router.push("/dashboard");
-          toast.success("Usuário logado com sucesso!");
+          toast.success("Bem vindo de volta!");
         },
         onError: (error) => {
           toast.error("Email ou senha inválidos!");
@@ -109,7 +109,9 @@ export default function LoginForm() {
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? (
-              <Loader2 className="animate-spin" />
+              <>
+                <Loader2 className="animate-spin" /> Logando...
+              </>
             ) : (
               "Login"
             )}
