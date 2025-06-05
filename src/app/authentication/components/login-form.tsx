@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { GoogleIcon } from "@/app/icons";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -34,7 +35,7 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<userLoginSchemaType> = async (values) => {
+  const handleLogin: SubmitHandler<userLoginSchemaType> = async (values) => {
     await authClient.signIn.email(
       {
         email: values.email,
@@ -51,6 +52,12 @@ export default function LoginForm() {
         },
       },
     );
+  };
+  const handleSignInWithGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
   };
 
   const formData: Array<{
@@ -75,7 +82,7 @@ export default function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
         <CardContent className="space-y-4">
           {formData.map((field) => (
             <FormField
@@ -98,7 +105,7 @@ export default function LoginForm() {
             />
           ))}
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-4">
           <Button
             type="submit"
             className={`w-full ${
@@ -115,6 +122,14 @@ export default function LoginForm() {
             ) : (
               "Login"
             )}
+          </Button>
+          <Button
+            type="button"
+            className="w-full cursor-pointer"
+            variant="outline"
+            onClick={handleSignInWithGoogle}
+          >
+            <GoogleIcon /> Logar com o Google
           </Button>
         </CardFooter>
       </form>
